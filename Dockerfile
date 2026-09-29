@@ -5,7 +5,7 @@ RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 WORKDIR /home/node/app
 COPY package.json ./
 USER node
-RUN npm install
+RUN npm install --omit=dev
 COPY --chown=node:node . .
 USER root
 RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
