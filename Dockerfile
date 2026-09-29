@@ -3,9 +3,9 @@ FROM node:24-alpine
 RUN apk update && apk upgrade && apk add --no-cache tini
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 WORKDIR /home/node/app
-COPY package.json ./
+COPY package.json package-lock.json ./
 USER node
-RUN npm install --omit=dev
+RUN npm ci --omit=dev && npm cache clean --force
 COPY --chown=node:node . .
 USER root
 RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
